@@ -2,21 +2,20 @@ import streamlit as st
 import pandas as pd
 import os
 
-# Load predictions CSV
-# Read predictions CSV (if already saved)
-# Define your CSV filename (local file for private use)
-CSV_PATH = "C:/Users/jbull/OneDrive/Documents/Python Projects/MLB/scoreboard/2025-08-04_predictions.csv"
+# Safer path handling (always relative to the app file directory)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_PATH = os.path.join(BASE_DIR, "2025-08-04_predictions.csv")
 
-# Check if running locally (file exists) or on Streamlit Cloud
-if os.path.exists(CSV_PATH):
+# Check for CSV and load
+if os.path.isfile(CSV_PATH):
     df_future_games = pd.read_csv(CSV_PATH)
 else:
-    st.warning("No local CSV found on the server. Please upload your predictions file.")
+    st.warning("Predictions CSV not found. Please upload it.")
     uploaded_file = st.file_uploader("Upload your predictions CSV", type=["csv"])
     if uploaded_file is not None:
         df_future_games = pd.read_csv(uploaded_file)
     else:
-        st.stop()  # Stop app until a file is uploaded
+        st.stop()  # Stop app until CSV is provided
 
 # Example team logos mapping (replace/add more teams)
 team_logos = {
