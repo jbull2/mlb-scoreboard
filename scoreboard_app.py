@@ -7,6 +7,7 @@ import streamlit.components.v1 as components
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MONEYLINE_CSV = os.path.join(BASE_DIR, "2025-08-04_predictions.csv")
 TOTALS_CSV = os.path.join(BASE_DIR, "2025-08-04_totals_predictions.csv")
+TODAYS_GAMES_CSV = os.path.join(BASE_DIR, "mlb_schedule.csv")
 
 # Load Moneyline CSV
 if os.path.isfile(MONEYLINE_CSV):
@@ -29,6 +30,33 @@ else:
         df_totals = pd.read_csv(uploaded_totals)
     else:
         df_totals = pd.DataFrame()
+
+# Load MLB Schedule CSV
+if os.path.isfile(TODAYS_GAMES_CSV):
+    df_schedule = pd.read_csv(TODAYS_GAMES_CSV)
+else:
+    st.warning("MLB Schedule CSV not found. Please upload it.")
+    uploaded_schedule = st.file_uploader("Upload MLB Schedule CSV", type=["csv"], key="schedule")
+    if uploaded_schedule:
+        df_schedule = pd.read_csv(uploaded_schedule)
+    else:
+        df_schedule = pd.DataFrame()
+
+# Merge schedule times into predictions
+if not df_schedule.empty:
+    df_moneyline = df_moneyline.merge(
+        df_schedule[['team', 'opponent', 'start_time']],
+        on=['team', 'opponent'],
+        how='left'
+    )
+    df_totals = df_totals.merge(
+        df_schedule[['team', 'opponent', 'start_time']],
+        on=['team', 'opponent'],
+        how='left'
+    )
+else:
+    df_moneyline['start_time'] = 'TBD'
+    df_totals['start_time'] = 'TBD'
 
 # Example team logos mapping (replace/add more teams)
 team_logos = {
@@ -84,17 +112,23 @@ for df in [df_moneyline, df_totals]:
 # --- Streamlit Page Config ---
 st.set_page_config(page_title="MLB Matchup Predictions", layout="wide")
 
-# Sidebar Filters
-teams = sorted(df_moneyline['team'].unique())
-selected_team = st.sidebar.selectbox("Filter by Team", ["All"] + teams)
-if selected_team != "All":
-    df_moneyline = df_moneyline[df_moneyline["team"] == selected_team]
-    df_totals = df_totals[df_totals["team"] == selected_team]
+# # Sidebar Filters
+# teams = sorted(df_moneyline['team'].unique())
+# selected_team = st.sidebar.selectbox("Filter by Team", ["All"] + teams)
+# if selected_team != "All":
+#     df_moneyline = df_moneyline[df_moneyline["team"] == selected_team]
+#     df_totals = df_totals[df_totals["team"] == selected_team]
 
-sort_option = st.sidebar.radio("Sort by", ["Date", "Win Probability"])
-if sort_option == "Win Probability":
-    df_moneyline = df_moneyline.sort_values(by="team_win_next_pred", ascending=False)
-    df_totals = df_totals.sort_values(by="model_confidence", ascending=False)
+# Convert and sort by start time
+for df in [df_moneyline, df_totals]:
+    if 'start_time' in df.columns:
+        df['start_time_sort'] = pd.to_datetime(df['start_time'], format='%I:%M %p', errors='coerce')
+        df.sort_values(by=['date', 'start_time_sort'], inplace=True)
+
+# sort_option = st.sidebar.radio("Sort by", ["Time", "Win Probability"])
+# if sort_option == "Win Probability":
+#     df_moneyline = df_moneyline.sort_values(by="team_win_next_pred", ascending=False)
+#     df_totals = df_totals.sort_values(by="model_confidence", ascending=False)
 
 # Tabs for Moneyline and Totals
 tab1, tab2 = st.tabs(["💰 Moneyline Predictions", "📊 Totals Predictions"])
@@ -104,7 +138,6 @@ tab1, tab2 = st.tabs(["💰 Moneyline Predictions", "📊 Totals Predictions"])
 # ================================
 st.markdown("""
 <style>
-/* Container Styling */
 body { background-color: #f7f7f7 !important; color: #222; font-family: 'Segoe UI', sans-serif; }
 [data-testid="stAppViewContainer"] { background-color: #f7f7f7; }
 [data-testid="stHeader"] { background: none; }
@@ -121,16 +154,20 @@ body { background-color: #f7f7f7 !important; color: #222; font-family: 'Segoe UI
 /* Game card */
 .game-card {
     background: #ffffff; border: 1px solid #e6e6e6; border-radius: 14px;
-    padding: 25px; text-align: center;
+    padding: 20px; text-align: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    display: flex; flex-direction: column; justify-content: space-between;
-    height: 270px;   /* Increased height */
-    width: 320px;    /* Wider width for better spacing */
-    margin-top: 10px;
-    margin-bottom: 20px;
+    display: flex; flex-direction: column; justify-content: flex-start;
+    height: 290px; width: 330px; margin: 10px auto 25px auto;
 }
 .game-card:hover { transform: translateY(-4px); box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.14); }
+
+/* Start time */
+.start-time {
+    font-size: 16px; font-weight: 600; color: #1a3d7c;
+    background: #eef3fc; border-radius: 8px; padding: 4px 8px;
+    display: inline-block; margin-bottom: 10px;
+}
 
 /* Logo container */
 .logo-container {
@@ -141,13 +178,12 @@ body { background-color: #f7f7f7 !important; color: #222; font-family: 'Segoe UI
 }
 .logo-container img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
 
-/* Text alignment with fixed heights */
+/* Text alignment */
 .team-name { font-weight: bold; font-size: 17px; color: #222; min-height: 42px; }
 .pitcher { font-size: 14px; color: #666; margin-bottom: 6px; min-height: 20px; }
 .win-prob { font-size: 15px; font-weight: bold; margin-top: 6px; min-height: 22px; }
 </style>
 """, unsafe_allow_html=True)
-
 
 # ================================
 # TAB 1: MONEYLINE
@@ -157,7 +193,7 @@ with tab1:
     for game_date, games_on_date in df_moneyline.groupby("date"):
         st.markdown(f"<div class='date-header'>{game_date}</div>", unsafe_allow_html=True)
         games_list = list(games_on_date.iterrows())
-        cards_per_row = 4
+        cards_per_row = 5
         for i in range(0, len(games_list), cards_per_row):
             cols = st.columns(cards_per_row, gap="large")
             for col_idx in range(cards_per_row):
@@ -165,9 +201,11 @@ with tab1:
                     _, game = games_list[i + col_idx]
                     team_prob = float(game['team_win_next_pred']) * 100
                     opp_prob = 100 - team_prob
+                    start_time = game.get('start_time', 'TBD')
                     with cols[col_idx]:
                         st.markdown(f"""
                             <div class="game-card">
+                                <div class="start-time">{start_time}</div>
                                 <div style="display:flex; justify-content:space-around; align-items:center;">
                                     <div>
                                         <div class="logo-container"><img src="{game['team_logo']}"/></div>
@@ -201,9 +239,11 @@ with tab2:
                 if i + col_idx < len(games_list):
                     _, game = games_list[i + col_idx]
                     prob = float(game['model_confidence']) * 100
+                    start_time = game.get('start_time', 'TBD')
                     with cols[col_idx]:
                         st.markdown(f"""
                             <div class="game-card">
+                                <div class="start-time">{start_time}</div>
                                 <div style="display:flex; justify-content:space-around; align-items:center;">
                                     <div>
                                         <div class="logo-container"><img src="{game['team_logo']}"/></div>
@@ -217,7 +257,7 @@ with tab2:
                                         <div class="pitcher">{game['away_pitcher']}</div>
                                     </div>
                                 </div>
-                                <div style="margin-top:10px; font-size:14px; font-weight:600;">
+                                <div style="margin-top:14px; font-size:15px; font-weight:600;">
                                     {game['model_pred'].capitalize()} {game['bookie_total']} ({prob:.1f}%)
                                 </div>
                             </div>
