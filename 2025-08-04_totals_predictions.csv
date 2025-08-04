@@ -1,0 +1,13 @@
+date,game_id,game_num,team,opponent,home_pitcher,away_pitcher,model_confidence,bookie_total,over_odds,under_odds,bookie_pred,model_pred,model_edge,model_edge_novig
+2025-08-04,776877,1,Philadelphia Phillies,Baltimore Orioles,Jesús Luzardo,Cade Povich,0.6242,8.5,1.78,2.0,over,over,0.0624,0.0951
+2025-08-04,776872,1,Colorado Rockies,Toronto Blue Jays,Tanner Gordon,Eric Lauer,0.6235,11.5,1.83,1.94,over,under,-0.1699,-0.1089
+2025-08-04,776878,1,Chicago Cubs,Cincinnati Reds,Michael Soroka,Nick Lodolo,0.5994,7.5,1.81,1.96,over,over,0.0469,0.0795
+2025-08-04,776870,1,Los Angeles Dodgers,St. Louis Cardinals,Tyler Glasnow,Sonny Gray,0.5789,8.5,1.98,1.8,under,over,0.0739,0.1028
+2025-08-04,776880,1,Boston Red Sox,Kansas City Royals,Brayan Bello,Bailey Falter,0.5617,9.5,1.92,1.84,under,under,-0.0826,-0.0724
+2025-08-04,776873,1,Arizona Diamondbacks,San Diego Padres,Brandon Pfaadt,JP Sears,0.5321,9.5,1.99,1.79,under,under,-0.0346,-0.0586
+2025-08-04,776867,1,Los Angeles Angels,Tampa Bay Rays,Yusei Kikuchi,Adrian Houser,0.5249,8.5,1.88,1.88,under,over,-0.0071,0.0249
+2025-08-04,776871,1,Texas Rangers,New York Yankees,Patrick Corbin,Max Fried,0.5244,8.5,2.01,1.77,under,under,-0.0219,-0.0561
+2025-08-04,776879,1,Pittsburgh Pirates,San Francisco Giants,Johan Oviedo,Justin Verlander,0.5244,8.5,1.89,1.88,under,under,-0.0535,-0.0257
+2025-08-04,776876,1,New York Mets,Cleveland Guardians,Sean Manaea,Slade Cecconi,0.5241,8.5,1.94,1.83,under,under,-0.0395,-0.0387
+2025-08-04,776875,1,Miami Marlins,Houston Astros,Sandy Alcantara,Jason Alexander,0.5152,8.5,1.92,1.85,under,over,-0.0056,0.0245
+2025-08-04,776882,1,Atlanta Braves,Milwaukee Brewers,Erick Fedde,Quinn Priester,0.5152,8.5,1.84,1.92,over,over,-0.0283,0.0046
