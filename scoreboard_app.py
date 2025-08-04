@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+import streamlit.components.v1 as components
 
 # File paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -103,44 +104,50 @@ tab1, tab2 = st.tabs(["💰 Moneyline Predictions", "📊 Totals Predictions"])
 # ================================
 st.markdown("""
 <style>
+/* Container Styling */
 body { background-color: #f7f7f7 !important; color: #222; font-family: 'Segoe UI', sans-serif; }
 [data-testid="stAppViewContainer"] { background-color: #f7f7f7; }
 [data-testid="stHeader"] { background: none; }
 
 .scoreboard-header {
     font-size: 36px; font-weight: bold; text-align: center; color: #1a3d7c;
-    margin-bottom: 30px; margin-top: 10px;
+    margin-bottom: 35px; margin-top: 15px;
 }
 .date-header {
     font-size: 22px; font-weight: bold; color: #1a1a1a;
-    margin: 40px 0 20px; border-bottom: 2px solid #ddd; padding-bottom: 8px;
+    margin: 50px 0 25px; border-bottom: 2px solid #ddd; padding-bottom: 8px;
 }
 
 /* Game card */
 .game-card {
-    background: #ffffff; border: 1px solid #e6e6e6; border-radius: 12px;
-    padding: 20px; margin-bottom: 25px; text-align: center;
+    background: #ffffff; border: 1px solid #e6e6e6; border-radius: 14px;
+    padding: 25px; text-align: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.06); max-width: 300px;
-    margin-left: auto; margin-right: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    display: flex; flex-direction: column; justify-content: space-between;
+    height: 270px;   /* Increased height */
+    width: 320px;    /* Wider width for better spacing */
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
-.game-card:hover { transform: translateY(-4px); box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12); }
+.game-card:hover { transform: translateY(-4px); box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.14); }
 
 /* Logo container */
 .logo-container {
     background-color: #ffffff; border-radius: 50%;
     display: flex; justify-content: center; align-items: center;
-    width: 70px; height: 70px; margin: 0 auto 8px auto;
+    width: 75px; height: 75px; margin: 0 auto 8px auto;
     border: 3px solid transparent; overflow: hidden;
 }
 .logo-container img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
 
-.team-name { font-weight: bold; font-size: 16px; margin-top: 6px; color: #222; }
-.pitcher { font-size: 13px; color: #666; margin-bottom: 6px; }
-.win-prob { font-size: 14px; margin-top: 6px; font-weight: bold; }
-.prob-bar { height: 6px; border-radius: 3px; margin-top: 4px; transition: width 0.8s ease-in-out; }
+/* Text alignment with fixed heights */
+.team-name { font-weight: bold; font-size: 17px; color: #222; min-height: 42px; }
+.pitcher { font-size: 14px; color: #666; margin-bottom: 6px; min-height: 20px; }
+.win-prob { font-size: 15px; font-weight: bold; margin-top: 6px; min-height: 22px; }
 </style>
 """, unsafe_allow_html=True)
+
 
 # ================================
 # TAB 1: MONEYLINE
@@ -150,7 +157,7 @@ with tab1:
     for game_date, games_on_date in df_moneyline.groupby("date"):
         st.markdown(f"<div class='date-header'>{game_date}</div>", unsafe_allow_html=True)
         games_list = list(games_on_date.iterrows())
-        cards_per_row = 4 if len(games_list) > 6 else 3
+        cards_per_row = 4
         for i in range(0, len(games_list), cards_per_row):
             cols = st.columns(cards_per_row, gap="large")
             for col_idx in range(cards_per_row):
@@ -167,7 +174,6 @@ with tab1:
                                         <div class="team-name">{game['team']}</div>
                                         <div class="pitcher">{game['home_pitcher']}</div>
                                         <div class="win-prob" style="color:{'green' if team_prob>=50 else 'red'};">{team_prob:.1f}%</div>
-                                        <div class="prob-bar" style="width:{team_prob}%; background:{'green' if team_prob>=50 else 'red'};"></div>
                                     </div>
                                     <div style="font-weight:bold; font-size:16px; margin:0 10px; color:#555;">VS</div>
                                     <div>
@@ -175,7 +181,6 @@ with tab1:
                                         <div class="team-name">{game['opponent']}</div>
                                         <div class="pitcher">{game['away_pitcher']}</div>
                                         <div class="win-prob" style="color:{'green' if opp_prob>=50 else 'red'};">{opp_prob:.1f}%</div>
-                                        <div class="prob-bar" style="width:{opp_prob}%; background:{'green' if opp_prob>=50 else 'red'};"></div>
                                     </div>
                                 </div>
                             </div>
@@ -189,14 +194,13 @@ with tab2:
     for game_date, games_on_date in df_totals.groupby("date"):
         st.markdown(f"<div class='date-header'>{game_date}</div>", unsafe_allow_html=True)
         games_list = list(games_on_date.iterrows())
-        cards_per_row = 4 if len(games_list) > 6 else 3
+        cards_per_row = 4
         for i in range(0, len(games_list), cards_per_row):
             cols = st.columns(cards_per_row, gap="large")
             for col_idx in range(cards_per_row):
                 if i + col_idx < len(games_list):
                     _, game = games_list[i + col_idx]
                     prob = float(game['model_confidence']) * 100
-                    color = 'green' if game['model_pred'] == 'over' else 'red'
                     with cols[col_idx]:
                         st.markdown(f"""
                             <div class="game-card">
@@ -205,9 +209,6 @@ with tab2:
                                         <div class="logo-container"><img src="{game['team_logo']}"/></div>
                                         <div class="team-name">{game['team']}</div>
                                         <div class="pitcher">{game['home_pitcher']}</div>
-                                        <div class="win-prob" style="color:{color};">
-                                            {game['model_pred'].capitalize()} {game['bookie_total']} ({prob:.1f}%)
-                                        </div>
                                     </div>
                                     <div style="font-weight:bold; font-size:16px; margin:0 10px; color:#555;">VS</div>
                                     <div>
@@ -215,6 +216,9 @@ with tab2:
                                         <div class="team-name">{game['opponent']}</div>
                                         <div class="pitcher">{game['away_pitcher']}</div>
                                     </div>
+                                </div>
+                                <div style="margin-top:10px; font-size:14px; font-weight:600;">
+                                    {game['model_pred'].capitalize()} {game['bookie_total']} ({prob:.1f}%)
                                 </div>
                             </div>
                         """, unsafe_allow_html=True)
