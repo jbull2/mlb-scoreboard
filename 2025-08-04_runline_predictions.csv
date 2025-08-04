@@ -1,0 +1,13 @@
+date,game_id,game_num,team,opponent,home_pitcher,away_pitcher,spread_covered_next,spread_covered_next_pred,pred_winner,confidence,home_spread,away_spread,home_spread_odds,away_spread_odds
+2025-08-04,776878,1,Chicago Cubs,Cincinnati Reds,Michael Soroka,Nick Lodolo,0,0.340226,Cincinnati Reds,0.6598,-1.5,1.5,2.52,1.53
+2025-08-04,776877,1,Philadelphia Phillies,Baltimore Orioles,Jesús Luzardo,Cade Povich,0,0.392438,Baltimore Orioles,0.6076,-1.5,1.5,1.98,1.83
+2025-08-04,776880,1,Boston Red Sox,Kansas City Royals,Brayan Bello,Bailey Falter,0,0.404952,Kansas City Royals,0.595,-1.5,1.5,2.25,1.65
+2025-08-04,776871,1,Texas Rangers,New York Yankees,Patrick Corbin,Max Fried,0,0.427642,New York Yankees,0.5724,1.5,-1.5,1.69,2.18
+2025-08-04,776873,1,Arizona Diamondbacks,San Diego Padres,Brandon Pfaadt,JP Sears,0,0.434406,San Diego Padres,0.5656,1.5,-1.5,1.64,2.26
+2025-08-04,776882,1,Atlanta Braves,Milwaukee Brewers,Erick Fedde,Quinn Priester,0,0.436849,Milwaukee Brewers,0.5632,1.5,-1.5,1.74,2.08
+2025-08-04,776879,1,Pittsburgh Pirates,San Francisco Giants,Johan Oviedo,Justin Verlander,0,0.440334,San Francisco Giants,0.5597,1.5,-1.5,1.63,2.3
+2025-08-04,776870,1,Los Angeles Dodgers,St. Louis Cardinals,Tyler Glasnow,Sonny Gray,1,0.55938,Los Angeles Dodgers,0.5594,-1.5,1.5,2.05,1.78
+2025-08-04,776876,1,New York Mets,Cleveland Guardians,Sean Manaea,Slade Cecconi,0,0.447189,Cleveland Guardians,0.5528,-1.5,1.5,2.18,1.69
+2025-08-04,776872,1,Colorado Rockies,Toronto Blue Jays,Tanner Gordon,Eric Lauer,1,0.520223,Colorado Rockies,0.5202,1.5,-1.5,2.16,1.7
+2025-08-04,776875,1,Miami Marlins,Houston Astros,Sandy Alcantara,Jason Alexander,1,0.5173,Miami Marlins,0.5173,-1.5,1.5,2.55,1.52
+2025-08-04,776867,1,Los Angeles Angels,Tampa Bay Rays,Yusei Kikuchi,Adrian Houser,0,0.489323,Tampa Bay Rays,0.5107,-1.5,1.5,2.63,1.49
