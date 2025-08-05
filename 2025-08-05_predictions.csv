@@ -1,0 +1,15 @@
+date,game_id,game_num,team,opponent,home_pitcher,away_pitcher,team_win_next,team_win_next_pred,pred_winner,confidence
+2025-08-05,776858,1,Los Angeles Dodgers,St. Louis Cardinals,Emmet Sheehan,Miles Mikolas,1,0.61006,Los Angeles Dodgers,0.6101
+2025-08-05,776864,1,Boston Red Sox,Kansas City Royals,Garrett Crochet,Ryan Bergert,1,0.598857,Boston Red Sox,0.5989
+2025-08-05,776868,1,Philadelphia Phillies,Baltimore Orioles,Taijuan Walker,Dean Kremer,1,0.586882,Philadelphia Phillies,0.5869
+2025-08-05,776869,1,Atlanta Braves,Milwaukee Brewers,Joey Wentz,Freddy Peralta,0,0.427858,Milwaukee Brewers,0.5721
+2025-08-05,776854,1,Colorado Rockies,Toronto Blue Jays,Anthony Molina,José Berríos,0,0.42909,Toronto Blue Jays,0.5709
+2025-08-05,776861,1,Detroit Tigers,Minnesota Twins,Chris Paddack,Zebby Matthews,1,0.56499,Detroit Tigers,0.565
+2025-08-05,776860,1,Chicago Cubs,Cincinnati Reds,Shota Imanaga,Zack Littell,1,0.561649,Chicago Cubs,0.5616
+2025-08-05,776855,1,Texas Rangers,New York Yankees,Nathan Eovaldi,Will Warren,1,0.553936,Texas Rangers,0.5539
+2025-08-05,776857,1,Seattle Mariners,Chicago White Sox,Bryan Woo,Davis Martin,1,0.553759,Seattle Mariners,0.5538
+2025-08-05,776863,1,New York Mets,Cleveland Guardians,Clay Holmes,Logan Allen,1,0.533172,New York Mets,0.5332
+2025-08-05,776865,1,Washington Nationals,Oakland Athletics,MacKenzie Gore,Luis Severino,1,0.516728,Washington Nationals,0.5167
+2025-08-05,776866,1,Pittsburgh Pirates,San Francisco Giants,Mike Burrows,Logan Webb,1,0.514034,Pittsburgh Pirates,0.514
+2025-08-05,776852,1,Arizona Diamondbacks,San Diego Padres,Ryne Nelson,Yu Darvish,0,0.487419,San Diego Padres,0.5126
+2025-08-05,776848,1,Los Angeles Angels,Tampa Bay Rays,José Soriano,Ryan Pepiot,0,0.491552,Tampa Bay Rays,0.5084

@@ -1,0 +1,15 @@
+date,game_id,game_num,team,opponent,home_pitcher,away_pitcher,spread_covered_next,spread_covered_next_pred,pred_winner,confidence,home_spread,away_spread,home_spread_odds,away_spread_odds
+2025-08-05,776865,1,Washington Nationals,Oakland Athletics,MacKenzie Gore,Luis Severino,0,0.272176,Oakland Athletics,0.7278,-1.5,1.5,2.47,1.55
+2025-08-05,776863,1,New York Mets,Cleveland Guardians,Clay Holmes,Logan Allen,0,0.291019,Cleveland Guardians,0.709,-1.5,1.5,2.25,1.65
+2025-08-05,776858,1,Los Angeles Dodgers,St. Louis Cardinals,Emmet Sheehan,Miles Mikolas,0,0.299303,St. Louis Cardinals,0.7007,-1.5,1.5,2.06,1.77
+2025-08-05,776861,1,Detroit Tigers,Minnesota Twins,Chris Paddack,Zebby Matthews,0,0.301191,Minnesota Twins,0.6988,-1.5,1.5,2.46,1.55
+2025-08-05,776864,1,Boston Red Sox,Kansas City Royals,Garrett Crochet,Ryan Bergert,0,0.316805,Kansas City Royals,0.6832,-1.5,1.5,1.82,1.99
+2025-08-05,776869,1,Atlanta Braves,Milwaukee Brewers,Joey Wentz,Freddy Peralta,0,0.317571,Milwaukee Brewers,0.6824,1.5,-1.5,1.69,2.17
+2025-08-05,776857,1,Seattle Mariners,Chicago White Sox,Bryan Woo,Davis Martin,0,0.324931,Chicago White Sox,0.6751,-1.5,1.5,1.89,1.91
+2025-08-05,776854,1,Colorado Rockies,Toronto Blue Jays,Anthony Molina,José Berríos,0,0.327763,Toronto Blue Jays,0.6722,1.5,-1.5,2.27,1.64
+2025-08-05,776860,1,Chicago Cubs,Cincinnati Reds,Shota Imanaga,Zack Littell,0,0.340227,Cincinnati Reds,0.6598,-1.5,1.5,2.22,1.67
+2025-08-05,776852,1,Arizona Diamondbacks,San Diego Padres,Ryne Nelson,Yu Darvish,0,0.399535,San Diego Padres,0.6005,1.5,-1.5,1.69,2.17
+2025-08-05,776866,1,Pittsburgh Pirates,San Francisco Giants,Mike Burrows,Logan Webb,0,0.401,San Francisco Giants,0.599,1.5,-1.5,1.66,2.23
+2025-08-05,776868,1,Philadelphia Phillies,Baltimore Orioles,Taijuan Walker,Dean Kremer,0,0.404248,Baltimore Orioles,0.5958,-1.5,1.5,2.4,1.58
+2025-08-05,776848,1,Los Angeles Angels,Tampa Bay Rays,José Soriano,Ryan Pepiot,0,0.407236,Tampa Bay Rays,0.5928,-1.5,1.5,2.59,1.5
+2025-08-05,776855,1,Texas Rangers,New York Yankees,Nathan Eovaldi,Will Warren,0,0.422818,New York Yankees,0.5772,-1.5,1.5,2.62,1.5
