@@ -1,0 +1,131 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', sans-serif;
+    color: #222;
+}
+
+.scoreboard-header {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: bold;
+    text-align: center;
+    color: #0d2040;
+    margin: 15px 0;
+}
+
+.date-header {
+    font-size: 22px;
+    font-weight: bold;
+    color: #1a1a1a;
+    margin: 30px 0 15px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 6px;
+}
+
+.scoreboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.game-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.start-time {
+    font-size: 14px;
+    font-weight: bold;
+    color: #1a3d7c;
+    background: #eef3fc;
+    border-radius: 8px;
+    padding: 4px 8px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.teams-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.team-block {
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.team-logo {
+    width: 55px;
+    height: 55px;
+    margin-bottom: 8px;
+}
+
+.team-name {
+    font-weight: bold;
+    font-size: 15px;
+    color: #222;
+    min-height: 36px; /* ✅ Reserve space to prevent layout shift */
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.pitcher {
+    font-size: 13px;
+    color: #555;
+    margin-top: 4px;
+}
+
+.vs {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0 10px;
+    color: #666;
+}
+
+.win-prob {
+    margin-top: 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.win-prob.favorite {
+    color: #28a745; /* Green */
+}
+
+.win-prob.underdog {
+    color: #dc3545; /* Red */
+}
+
+.prediction {
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .teams-container {
+        flex-direction: column;
+    }
+
+    .vs {
+        margin: 8px 0;
+    }
+}

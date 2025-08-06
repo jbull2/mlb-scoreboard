@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLB Matchup Predictions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <h1 class="scoreboard-header text-center mt-3">MLB Matchup Predictions</h1>
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs justify-content-center" id="predictionTabs" role="tablist">
+        <li class="nav-item">
+            <button class="nav-link active" id="moneyline-tab" data-bs-toggle="tab" data-bs-target="#moneyline" type="button" role="tab">Moneyline</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="totals-tab" data-bs-toggle="tab" data-bs-target="#totals" type="button" role="tab">Totals</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="runline-tab" data-bs-toggle="tab" data-bs-target="#runline" type="button" role="tab">Runline</button>
+        </li>
+    </ul>
+
+    <div class="tab-content container mt-4">
+        <!-- MONEYLINE TAB -->
+        <div class="tab-pane fade show active" id="moneyline" role="tabpanel">
+            {% for date, games in df_moneyline.groupby('date') %}
+                <h3 class="date-header">{{ date }}</h3>
+                <div class="scoreboard-grid">
+                    {% for _, game in games.iterrows() %}
+                        {% set team_prob = (game.team_win_next_pred * 100) %}
+                        {% set opp_prob = 100 - team_prob %}
+                        <div class="game-card">
+                            <div class="start-time">{{ game.start_time }}</div>
+                            <div class="teams-container">
+                                <div class="team-block">
+                                    <img src="{{ game.opponent_logo }}" class="team-logo" />
+                                    <div class="team-name">{{ game.opponent }}</div>
+                                    <div class="pitcher">{{ game.away_pitcher }}</div>
+                                    <div class="win-prob {{ 'favorite' if opp_prob > team_prob else 'underdog' }}">
+                                        {{ '%.1f' % opp_prob }}%
+                                    </div>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team-block">
+                                    <img src="{{ game.team_logo }}" class="team-logo" />
+                                    <div class="team-name">{{ game.team }}</div>
+                                    <div class="pitcher">{{ game.home_pitcher }}</div>
+                                    <div class="win-prob {{ 'favorite' if team_prob > opp_prob else 'underdog' }}">
+                                        {{ '%.1f' % team_prob }}%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- TOTALS TAB -->
+        <div class="tab-pane fade" id="totals" role="tabpanel">
+            {% for date, games in df_totals.groupby('date') %}
+                <h3 class="date-header">{{ date }}</h3>
+                <div class="scoreboard-grid">
+                    {% for _, game in games.iterrows() %}
+                        <div class="game-card">
+                            <div class="start-time">{{ game.start_time }}</div>
+                            <div class="teams-container">
+                                <div class="team-block">
+                                    <img src="{{ game.opponent_logo }}" class="team-logo" />
+                                    <div class="team-name">{{ game.opponent }}</div>
+                                    <div class="pitcher">{{ game.away_pitcher }}</div>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team-block">
+                                    <img src="{{ game.team_logo }}" class="team-logo" />
+                                    <div class="team-name">{{ game.team }}</div>
+                                    <div class="pitcher">{{ game.home_pitcher }}</div>
+                                </div>
+                            </div>
+                            <div class="prediction">{{ game.model_pred|capitalize }} {{ game.bookie_total }} ({{ '%.1f' % (game.model_confidence * 100) }}%)</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- RUNLINE TAB -->
+        <div class="tab-pane fade" id="runline" role="tabpanel">
+            {% for date, games in df_runline.groupby('date') %}
+                <h3 class="date-header">{{ date }}</h3>
+                <div class="scoreboard-grid">
+                    {% for _, game in games.iterrows() %}
+                        {% set spread_value = game.home_spread if game.pred_winner == game.team else game.away_spread %}
+                        {% set spread_formatted = '+' ~ '%.1f' % spread_value if spread_value > 0 else '%.1f' % spread_value %}
+                        <div class="game-card">
+                            <div class="start-time">{{ game.start_time }}</div>
+                            <div class="teams-container">
+                                <div class="team-block">
+                                    <img src="{{ game.opponent_logo }}" class="team-logo" />
+                                    <div class="team-name">{{ game.opponent }}</div>
+                                    <div class="pitcher">{{ game.away_pitcher }}</div>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team-block">
+                                    <img src="{{ game.team_logo }}" class="team-logo" />
+                                    <div class="team-name">{{ game.team }}</div>
+                                    <div class="pitcher">{{ game.home_pitcher }}</div>
+                                </div>
+                            </div>
+                            <div class="prediction">Predicted: {{ game.pred_winner }} {{ spread_formatted }} ({{ '%.1f' % (game.confidence * 100) }}%)</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
